@@ -1,11 +1,11 @@
 {
-  "name": "microBlog-koa2",
+  "name": "microblog-koa2",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "node bin/www",
-    "dev": "./node_modules/.bin/nodemon bin/www",
-    "prd": "pm2 start bin/www",
+    "dev": "cross-env NODE_ENV=dev ./node_modules/.bin/nodemon bin/www",
+    "prd": "cross-env NODE_ENV=prodution pm2 start bin/www",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "koa-views": "^6.2.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.0",
     "nodemon": "^1.19.1"
   }
 }
