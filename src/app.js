@@ -5,6 +5,9 @@ const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const session = require('koa-generic-session')
+const redisStore = require('koa-redis')
+const { REDIS_CONFIG } = require('./config/db')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
@@ -33,6 +36,21 @@ app.use(views(__dirname + '/views', {
 //   const ms = new Date() - start
 //   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 // })
+
+app.keys = ['Burc123456.'] // 设置签名的 Cookie 密钥。
+app.use(session({
+  key: 'sid', // cookie name 默认是 'koa:sid'  值是redis的key（不带前缀）
+  prefix: 'sess', // redis key的前缀 默认是 'koa:sess:' 
+  ttl: 24 * 60 *60 *1000, //redis的过期时间 默认为cookie.maxAge
+  cookie:{
+    path: '/', //生成的cookie在该网站所有目录都可以访问
+    httpOnly: true, // cookie只能在 服务端 修改
+    maxAge: 24 * 60 *60 *1000 //过期时间 单位(ms)
+  },
+  store: redisStore({
+    all: `${REDIS_CONFIG.host}:${REDIS_CONFIG.port}`
+  })
+}))
 
 // routes
 app.use(index.routes(), index.allowedMethods())
