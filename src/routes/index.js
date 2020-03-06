@@ -15,7 +15,7 @@ router.get('/json', async (ctx, next) => {
   ctx.session.viewCount++
 
   ctx.body = {
-    viewCount: ctx.session.viewCount,
+    viewCount: 1,
     data: 'session'
   }
 })
