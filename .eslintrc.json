@@ -1,0 +1,22 @@
+{
+    "parser": "babel-eslint",
+    "env": {
+        "es6": true,
+        "commonjs": true,
+        "node": true
+    },
+    "rules": {
+        "indent": ["error", 2], //2缩进
+        "quotes": [  // 单引号 允许模版字符串
+            "error",
+            "single",
+            {
+              "allowTemplateLiterals": true
+            }
+        ],
+        "semi": [  // 不写分号
+            "error",
+            "never"
+        ]
+    }
+}
