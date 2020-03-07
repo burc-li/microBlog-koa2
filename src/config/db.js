@@ -8,7 +8,7 @@ let REDIS_CONFIG = {
 }
 
 let MYSQL_CONFIG = {
-  database: '',
+  database: 'blog_koa2',
   user: 'root',
   password: 'qq14569',
   host: 'localhost',  //  接数据库的主机

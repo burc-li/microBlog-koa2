@@ -10,7 +10,7 @@ const redisStore = require('koa-redis')
 const { REDIS_CONFIG } = require('./config/db')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
+const user = require('./routes/user')
 
 // error handler 在页面上显示错误信息
 onerror(app)
@@ -54,7 +54,7 @@ app.use(session({
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
+app.use(user.routes(), user.allowedMethods())
 
 // error-handling  打印错误信息
 app.on('error', (err, ctx) => {

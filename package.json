@@ -36,7 +36,7 @@
     "pre-commit": "^1.2.2",
     "supertest": "^4.0.2"
   },
-  "pre-commit": {
+  "pre-commit": [
     "lint"
-  }
+  ]
 }

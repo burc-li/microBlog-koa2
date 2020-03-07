@@ -29,12 +29,5 @@ const config = {
  */
 const seq = new Sequelize(database, user, password, config)
 
-// 测试数据库是否连接成功
-seq.authenticate().then(() => {
-  console.log('Connection has been established successfully.')
-}).catch(() => {
-  console.error('Unable to connect to the database:', err);
-})
-
 module.exports = seq
 
