@@ -9,8 +9,11 @@ const session = require('koa-generic-session')
 const redisStore = require('koa-redis')
 const { REDIS_CONFIG } = require('./config/db')
 
+const { SESSION_SECRET_KEY } = require('./config/secretKeys')
+
 const index = require('./routes/index')
 const user = require('./routes/user')
+
 
 // error handler 在页面上显示错误信息
 onerror(app)
@@ -37,7 +40,7 @@ app.use(views(__dirname + '/views', {
 //   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 // })
 
-app.keys = ['Burc123456.'] // 设置签名的 Cookie 密钥。
+app.keys = [SESSION_SECRET_KEY] // 设置签名的 Cookie 密钥。
 app.use(session({
   key: 'sid', // cookie name 默认是 'koa:sid'  值是redis的key（不带前缀）
   prefix: 'sess', // redis key的前缀 默认是 'koa:sess:' 
