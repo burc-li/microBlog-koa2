@@ -42,8 +42,8 @@ app.use(views(__dirname + '/views', {
 
 app.keys = [SESSION_SECRET_KEY] // 设置签名的 Cookie 密钥。
 app.use(session({
-  key: 'sid', // cookie name 默认是 'koa:sid'  值是redis的key（不带前缀）
-  prefix: 'sess', // redis key的前缀 默认是 'koa:sess:' 
+  key: 'koa:sid', // cookie name 默认是 'koa:sid'  值是redis的key（不带前缀）
+  prefix: 'koa:sess:', // redis key的前缀 默认是 'koa:sess:' 
   ttl: 24 * 60 *60 *1000, //redis的过期时间 默认为cookie.maxAge
   cookie:{
     path: '/', //生成的cookie在该网站所有目录都可以访问
