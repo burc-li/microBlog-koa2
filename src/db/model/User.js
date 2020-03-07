@@ -13,7 +13,7 @@ const User = seq.define('user', {
     unique: true,
     comment: '用户名，唯一'
   },
-  passWord: {
+  password: {
     type: STRING,
     allowNull: false,
     comment: '密码'
