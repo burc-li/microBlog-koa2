@@ -3,6 +3,7 @@
  */
 
 module.exports = {
-  DEFAULT_PICTURE: 'http://616pic.com/sucai/vwxipenmd.html',
-  PAGE_SIZE: 5,
+  DEFAULT_PICTURE: 'http://616pic.com/sucai/vwxipenmd.html', //默认头像地址
+  PAGE_SIZE: 5, // 页码数
+  UPLOAD_MAX_SIZE: 200 * 1024 * 1024, //最大上传文件大小2MB
 }
