@@ -17,6 +17,7 @@ const { UPLOAD_MAX_SIZE } = require('./config/constant')
 const index = require('./routes/index')
 const user = require('./routes/user')
 const utils = require('./routes/utils')
+const blog = require('./routes/blog_home')
 
 
 // error handler 在页面上显示错误信息
@@ -66,6 +67,7 @@ app.use(session({
 app.use(index.routes(), index.allowedMethods())
 app.use(user.routes(), user.allowedMethods())
 app.use(utils.routes(), utils.allowedMethods())
+app.use(blog.routes(), blog.allowedMethods())
 
 // error-handling  打印错误信息
 app.on('error', (err, ctx) => {
