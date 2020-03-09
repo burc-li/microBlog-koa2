@@ -8,7 +8,7 @@ const { getProfileBlogList } = require('../controller/blog_profile')
 
 router.prefix('/api/blog/profile')
 
-// 加载更多
+// 获取指定用户的博客列表
 router.get('/list', loginCheck, async (ctx, next) => {
   const { userName, pageIndex } = ctx.query
 
