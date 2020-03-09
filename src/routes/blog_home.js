@@ -16,4 +16,5 @@ router.post('/create', loginCheck,  async (ctx, next) => {
   ctx.body = await create({ userId, content, image })
 })
 
+
 module.exports = router
