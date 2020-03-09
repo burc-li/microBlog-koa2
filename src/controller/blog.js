@@ -31,14 +31,16 @@ async function create({ userId, content, image }) {
 }
 
 /**
- * 获取首页的微博列表
- * @param {number} pageIndex pageIndex
+ * 获取微博列表  若有userName则是指定用户
+ * 获取微博列表  若没有userName则是全部用户
+ * @param {number} pageIndex 当前页码
+ * @param {string} userName 用户名
  */
-async function getHomeBlogList(pageIndex = 0) {
-  const result = await getBlogListByUser({
-    pageIndex,
-    pageSize: PAGE_SIZE
-  })
+async function getBlogList(pageIndex = 0, userName) {
+  let queryObj = { pageIndex, pageSize: PAGE_SIZE }
+  if (userName)
+    Object.assign(queryObj, { userName })
+  const result = await getBlogListByUser(queryObj)
   const blogList = result.blogList
 
   // 拼接返回数据
@@ -53,5 +55,5 @@ async function getHomeBlogList(pageIndex = 0) {
 
 module.exports = {
   create,
-  getHomeBlogList
+  getBlogList
 }

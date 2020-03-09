@@ -16,8 +16,7 @@ const { SESSION_SECRET_KEY } = require('./config/secretKeys')
 const index = require('./routes/index')
 const user = require('./routes/user')
 const utils = require('./routes/utils')
-const blog = require('./routes/blog_home')
-const blogProfile = require('./routes/blog_profile')
+const blog = require('./routes/blog')
 
 
 // error handler 在页面上显示错误信息
@@ -34,7 +33,7 @@ app.use(logger())
 // 例如访问public/stylesheets/style.css 浏览器输入： http://localhost:3000/stylesheets/style.css
 // 例如访问uploadFiles/1.jpg 浏览器输入： http://localhost:3000/1.jpg
 app.use(koaStatic(__dirname + '/public'))
-app.use(koaStatic(path.join(__dirname,'..','/uploadFiles')))
+app.use(koaStatic(path.join(__dirname, '..', '/uploadFiles')))
 
 app.use(views(__dirname + '/views', {
   extension: 'ejs'
@@ -68,7 +67,6 @@ app.use(index.routes(), index.allowedMethods())
 app.use(user.routes(), user.allowedMethods())
 app.use(utils.routes(), utils.allowedMethods())
 app.use(blog.routes(), blog.allowedMethods())
-app.use(blogProfile.routes(), blogProfile.allowedMethods())
 
 // error-handling  打印错误信息
 app.on('error', (err, ctx) => {
