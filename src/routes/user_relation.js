@@ -8,8 +8,8 @@ const { getFans } = require('../controller/user_relation')
 
 router.prefix('/api/relation')
 
-// 我关注了哪些用户
-router.get('/follow', loginCheck, async (ctx, next) => {
+// 获取粉丝列表API
+router.get('/fans', loginCheck, async (ctx, next) => {
   const { userId } = ctx.query
 
   ctx.body = await getFans(userId)
