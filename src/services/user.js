@@ -4,6 +4,7 @@
 
 const { User } = require("../db/model/index");
 const { formatUser } = require("./_format");
+const { addFollower } = require('./user_relation')
 
 /**
  * 获取用户信息
@@ -51,6 +52,9 @@ async function createUser({ userName, password, gender = 3, nickName }) {
     gender
   });
   const data = result.dataValues;
+
+  // 添加自己关注自己【为了获取关注人微博时也获取自己的微博信息】
+  addFollower(data.id, data.id)
 
   return data;
 }
