@@ -6,6 +6,7 @@ const seq = require('../seq')
 const { INTEGER, STRING, TEXT } = require('../types')
 
 const Blog = seq.define('blog', {
+  // 自动创建id，并设置为主键，自增
   userId: {
     type: INTEGER,
     allowNull: false,
@@ -20,6 +21,7 @@ const Blog = seq.define('blog', {
     type: STRING,
     comment: '图片地址'
   }
+  // 自动创建createAt 和 updateAt
 })
 
 module.exports = Blog

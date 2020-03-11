@@ -7,7 +7,7 @@
  */
 class BaseModel {
   constructor({ error, data, message }) {
-    if(error){
+    if (error) {
       this.error = error
     }
     if (data) {

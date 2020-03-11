@@ -26,7 +26,7 @@ function formatUser(list) {
 
   if (list instanceof Array) {
     // 数组 用户列表
-    return list.map( item => _formatUserPicture(item))
+    return list.map(item => _formatUserPicture(item))
   }
 
   // 单个用户对象

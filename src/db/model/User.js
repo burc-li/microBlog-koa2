@@ -7,6 +7,7 @@ const { STRING, DECIMAL, } = require('../types')
 
 // 数据表的名字是users
 const User = seq.define('user', {
+  // 自动创建id，并设置为主键，自增
   userName: {
     type: STRING,
     allowNull: false,
@@ -37,6 +38,7 @@ const User = seq.define('user', {
     type: STRING,
     comment: '城市'
   }
+  // 自动创建createAt 和 updateAt
 })
 
 module.exports = User

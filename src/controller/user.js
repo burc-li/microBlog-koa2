@@ -24,7 +24,7 @@ async function isExist(userName) {
     return new SuccessModel(userInfo);
   } else {
     // { errno: 10003, message: '用户名未存在' }
-    return new ErrorModel(registerUserNameExistInfo);
+    return new ErrorModel(registerUserNameNotExistInfo);
   }
 }
 
