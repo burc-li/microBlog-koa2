@@ -4,16 +4,9 @@
 
 const router = require('koa-router')()
 const { loginCheck } = require('../middlewares/loginCheck')
-const { getFans, follow, unFollow } = require('../controller/user_relation')
+const { getFans, getFollowers, follow, unFollow } = require('../controller/user_relation')
 
 router.prefix('/api/relation')
-
-// 获取粉丝列表API
-router.get('/fans', loginCheck, async (ctx, next) => {
-  const { userId } = ctx.query
-
-  ctx.body = await getFans(userId)
-})
 
 // 关注
 router.post('/follow', loginCheck, async (ctx, next) => {
@@ -28,5 +21,20 @@ router.delete('/unFollow', loginCheck, async (ctx, next) => {
   const { userId: curUserId } = ctx.request.body
   ctx.body = await unFollow(myUserId, curUserId)
 })
+
+// 获取粉丝列表API
+router.get('/fans', loginCheck, async (ctx, next) => {
+  const { userId } = ctx.query
+
+  ctx.body = await getFans(userId)
+})
+
+// 获取关注人列表API
+router.get('/follower', loginCheck, async (ctx, next) => {
+  const { userId } = ctx.query
+
+  ctx.body = await getFollowers(userId)
+})
+
 
 module.exports = router
