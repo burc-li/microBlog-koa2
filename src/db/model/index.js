@@ -33,6 +33,13 @@ User.hasMany(UserRelation, {
   foreignKey: 'userId'
 })
 
+// 数据库中无法关联，之前 blogs表中userId 已经关联过 users表中的id
+// 虽然数据库中无法关联，但是模型中已经关联，只是无法同步到数据库，可以正常使用
+Blog.belongsTo(UserRelation, {
+  foreignKey: 'userId',
+  targetKey: 'followerId'
+})
+
 module.exports = {
   User,
   Blog,

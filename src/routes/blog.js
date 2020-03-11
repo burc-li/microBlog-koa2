@@ -4,7 +4,7 @@
 
 const router = require('koa-router')()
 const { loginCheck } = require('../middlewares/loginCheck')
-const { create, del, getBlogList } = require('../controller/blog')
+const { create, del, getBlogList, getFollowersBlogList } = require('../controller/blog')
 
 router.prefix('/api/blog')
 
@@ -35,6 +35,13 @@ router.get('/profile/list', loginCheck, async (ctx, next) => {
   const { userName, pageIndex } = ctx.query
 
   ctx.body = await getBlogList(pageIndex, userName)
+})
+
+// 获取关注用户的博客列表
+router.get('/follow/list', loginCheck, async (ctx, next) => {
+  const { userId, pageIndex } = ctx.query
+
+  ctx.body = await getFollowersBlogList(pageIndex, userId)
 })
 
 
