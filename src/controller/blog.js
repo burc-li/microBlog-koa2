@@ -3,9 +3,9 @@
  */
 
 const xss = require('xss')
-const { createBlog, getBlogListByUser } = require('../services/blog')
+const { createBlog, delBlog, getBlogListByUser } = require('../services/blog')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
-const { createBlogFailInfo } = require('../model/ErrorInfo')
+const { createBlogFailInfo, deleteBlogFailInfo } = require('../model/ErrorInfo')
 const { PAGE_SIZE } = require('../config/constant')
 
 /**
@@ -28,6 +28,17 @@ async function create({ userId, content, image }) {
     console.error(ex.message, ex.stack)
     return new ErrorModel(createBlogFailInfo)
   }
+}
+
+/**
+ * 根据博客 id 删除博客
+ * @param {number} blogId 
+ */
+async function del(blogId) {
+  const res = await delBlog(blogId)
+  if (res)
+    return new SuccessModel()
+  return new ErrorModel(deleteBlogFailInfo)
 }
 
 /**
@@ -55,5 +66,6 @@ async function getBlogList(pageIndex = 0, userName) {
 
 module.exports = {
   create,
+  del,
   getBlogList
 }

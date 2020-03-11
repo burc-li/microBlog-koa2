@@ -4,7 +4,7 @@
 
 const router = require('koa-router')()
 const { loginCheck } = require('../middlewares/loginCheck')
-const { create, getBlogList } = require('../controller/blog')
+const { create, del, getBlogList } = require('../controller/blog')
 
 router.prefix('/api/blog')
 
@@ -14,6 +14,13 @@ router.post('/create', loginCheck, async (ctx, next) => {
   // 取别名 将 id 取别名 userId
   const { id: userId } = ctx.session.userInfo
   ctx.body = await create({ userId, content, image })
+})
+
+// 删除某个的博客
+router.delete('/del', loginCheck, async (ctx, next) => {
+  const { id: blogId } = ctx.request.body
+
+  ctx.body = await del(blogId)
 })
 
 // 获取首页（全部用户）的博客列表

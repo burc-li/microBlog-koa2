@@ -19,6 +19,21 @@ async function createBlog({ userId, content, image }) {
 }
 
 /**
+ * 删除微博
+ * @param {number} blogId 博客id 
+ */
+async function delBlog(blogId) {
+  const res = await Blog.destroy({
+    where: {
+      id: blogId
+    }
+  })
+
+  console.log('res', res)
+  return res > 0
+}
+
+/**
  * 根据用户获取微博列表
  * @param {Object} param0 查询参数 { userName, pageIndex = 0, pageSize = 10 }
  */
@@ -66,6 +81,7 @@ async function getBlogListByUser(
 
 module.exports = {
   createBlog,
+  delBlog,
   getBlogListByUser
 }
 
