@@ -118,9 +118,6 @@ async function getFollowersBlogListByUser(pageIndex, userId, pageSize) {
     return blogItem
   })
 
-  console.log("blogList", blogList)
-
-
   return {
     count: result.count,
     blogList
