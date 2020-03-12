@@ -36,15 +36,15 @@ async function delBlog(blogId) {
 
 /**
  * 根据用户获取微博列表
- * @param {Object} param0 查询参数 { userName, pageIndex = 0, pageSize = 10 }
+ * @param {Object} param0 查询参数 { userId, pageIndex = 0, pageSize = 10 }
  */
 async function getBlogListByUser(
-  { userName, pageIndex, pageSize }
+  { userId, pageIndex, pageSize }
 ) {
   // 拼接查询条件
   const userWhereOpts = {}
-  if (userName) {
-    userWhereOpts.userName = userName
+  if (userId) {
+    userWhereOpts.id = userId
   }
 
   // 执行查询

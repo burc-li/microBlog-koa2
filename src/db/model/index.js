@@ -5,6 +5,7 @@
 const User = require('./User')
 const Blog = require('./Blog')
 const UserRelation = require('./UserRelation')
+const Message = require('./Message')
 
 // 外键添加在父关联对象中 Blog
 // 创建当前模型（源）到目标模型之间的关系，外键会被添加到源模型中。

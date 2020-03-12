@@ -47,10 +47,10 @@ async function del(blogId) {
  * @param {number} pageIndex 当前页码
  * @param {string} userName 用户名
  */
-async function getBlogList(pageIndex = 0, userName) {
+async function getBlogList(pageIndex = 0, userId) {
   let queryObj = { pageIndex, pageSize: PAGE_SIZE }
-  if (userName)
-    Object.assign(queryObj, { userName })
+  if (userId)
+    Object.assign(queryObj, { userId })
   const result = await getBlogListByUser(queryObj)
   const blogList = result.blogList
 

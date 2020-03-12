@@ -32,9 +32,9 @@ router.get('/list', loginCheck, async (ctx, next) => {
 
 // 获取指定用户的博客列表
 router.get('/profile/list', loginCheck, async (ctx, next) => {
-  const { userName, pageIndex } = ctx.query
+  const { userId, pageIndex } = ctx.query
 
-  ctx.body = await getBlogList(pageIndex, userName)
+  ctx.body = await getBlogList(pageIndex, userId)
 })
 
 // 获取关注用户的博客列表
