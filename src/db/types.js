@@ -9,5 +9,5 @@ module.exports = {
   DECIMAL: Sequelize.DECIMAL,  // 小数
   TEXT: Sequelize.TEXT,
   INTEGER: Sequelize.INTEGER,
-  BOOLEAN: Sequelize.BOOLEAN
+  BOOLEAN: Sequelize.BOOLEAN  // TINYINT(1)
 }

@@ -44,5 +44,6 @@ Blog.belongsTo(UserRelation, {
 module.exports = {
   User,
   Blog,
-  UserRelation
+  UserRelation,
+  Message
 }

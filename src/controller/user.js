@@ -67,7 +67,7 @@ async function login({ ctx, userName, password }) {
 
   // 登录成功
   ctx.session.userInfo = userInfo;
-  return new SuccessModel();
+  return new SuccessModel(userInfo);
 }
 
 /**

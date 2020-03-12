@@ -73,4 +73,14 @@ module.exports = {
     error: 11002,
     message: '删除微博失败，请重试'
   },
+  // 点赞失败
+  likeBlogFailInfo: {
+    error: 11003,
+    message: '点赞失败，请重试'
+  },
+  // 举报失败
+  complainBlogFailInfo: {
+    error: 11004,
+    message: '举报失败，请重试'
+  },
 }
