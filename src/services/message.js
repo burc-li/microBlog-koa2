@@ -5,7 +5,7 @@
 const { Message } = require('../db/model')
 
 /**
- * 添加点赞、举报、评论 消息数据
+ * 添加点赞、举报、评论回复 消息数据
  */
 async function addMessage({ userId, blogId, toUserId, type }) {
   let addOptions = {
