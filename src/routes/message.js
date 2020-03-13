@@ -22,8 +22,8 @@ router.post('/complain', loginCheck, async (ctx, next) => {
 
 // 评论微博
 router.post('/comment', loginCheck, async (ctx, next) => {
-  const { userId, blogId, toUserId, comment } = ctx.request.body
-  ctx.body = await commentBlog({ userId, blogId, toUserId, comment, type: 2 })
+  const { userId, blogId, toUserId, content } = ctx.request.body
+  ctx.body = await commentBlog({ userId, blogId, toUserId, content, type: 3 })
 })
 
 

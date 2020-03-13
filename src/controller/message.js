@@ -43,9 +43,9 @@ async function complainBlog({ userId, blogId, type }) {
  * @param {number} toUserId  被回复的用户ID
  * @param {number} type  类型【点赞：1； 举报：2； 评论：3】
  */
-async function commentBlog({ userId, blogId, toUserId, comment, type }) {
+async function commentBlog({ userId, blogId, toUserId, content, type }) {
   try {
-    await addMessage({ userId, blogId, toUserId, comment, type })
+    await addMessage({ userId, blogId, toUserId, content, type })
     return new SuccessModel()
   } catch (err) {
     return new ErrorModel(commentBlogFailInfo)

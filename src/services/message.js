@@ -16,8 +16,8 @@ async function addMessage({ userId, blogId, toUserId, comment, type }) {
   }
   if (toUserId)
     Object.assign(addOptions, { toUserId })
-  if (comment)
-    Object.assign(addOptions, { comment })
+  if (content)
+    Object.assign(addOptions, { content })
   const res = await Message.create(addOptions)
   return res.dataValues
 }

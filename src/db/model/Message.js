@@ -21,7 +21,7 @@ const Message = seq.define('message', {
     type: INTEGER,
     comment: '被回复的 用户ID（评论被回复的用户，点赞举报都为NULL）'
   },
-  comment: {
+  content: {
     type: STRING,
     comment: '评论内容、回复内容'
   },
