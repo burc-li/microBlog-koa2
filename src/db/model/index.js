@@ -41,6 +41,11 @@ Blog.belongsTo(UserRelation, {
   targetKey: 'followerId'
 })
 
+// 一篇博客可以获取到许多点赞举报评论回复消息
+Blog.hasMany(Message, {
+  foreignKey: 'blogId'
+})
+
 module.exports = {
   User,
   Blog,
