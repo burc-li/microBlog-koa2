@@ -3,7 +3,7 @@
  */
 
 const seq = require('../seq')
-const { INTEGER, BOOLEAN } = require('../types')
+const { INTEGER, BOOLEAN, STRING } = require('../types')
 
 const Message = seq.define('message', {
   // 自动创建id，并设置为主键，自增
@@ -12,14 +12,18 @@ const Message = seq.define('message', {
     allowNull: false,
     comment: '做出动作的 用户ID'
   },
-  toUserId: {
-    type: INTEGER,
-    comment: '被回复的 用户ID（评论被回复的用户，点赞举报都为NULL）'
-  },
   blogId: {
     type: INTEGER,
     allowNull: false,
     comment: '博客ID（哪一篇博客下面的点赞、举报、评论）'
+  },
+  toUserId: {
+    type: INTEGER,
+    comment: '被回复的 用户ID（评论被回复的用户，点赞举报都为NULL）'
+  },
+  comment: {
+    type: STRING,
+    comment: '评论内容、回复内容'
   },
   isRead: {
     type: BOOLEAN,
