@@ -4,7 +4,7 @@
 
 const router = require('koa-router')()
 const { loginCheck } = require('../middlewares/loginCheck')
-const { likeBlog, complainBlog } = require('../controller/message')
+const { likeBlog, complainBlog, commentBlog } = require('../controller/message')
 
 router.prefix('/api/message')
 
@@ -18,6 +18,12 @@ router.post('/like', loginCheck, async (ctx, next) => {
 router.post('/complain', loginCheck, async (ctx, next) => {
   const { userId, blogId } = ctx.request.body
   ctx.body = await complainBlog({ userId, blogId, type: 2 })
+})
+
+// 评论微博
+router.post('/comment', loginCheck, async (ctx, next) => {
+  const { userId, blogId, toUserId } = ctx.request.body
+  ctx.body = await commentBlog({ userId, blogId, toUserId, type: 2 })
 })
 
 

@@ -83,4 +83,9 @@ module.exports = {
     error: 11004,
     message: '举报失败，请重试'
   },
+  // 评论失败
+  commentBlogFailInfo: {
+    error: 11005,
+    message: '评论失败，请重试'
+  },
 }
