@@ -5,6 +5,68 @@
 const { Message, User, Blog } = require('../db/model')
 const { formatUser } = require('../services/_format')
 
+// 获取用户写的所有博客中的点赞信息、举报信息、评论回复信息
+async function getMessage(userId) {
+  const res = await Message.findAndCountAll({
+    order: [
+      ['id', 'desc']
+    ],
+    where: {
+      isRead: false
+    },
+    include: [
+      {
+        model: Blog,
+        where: {
+          userId
+        }
+      }, {
+        model: User,
+        attributes: ['id', 'userName', 'nickName', 'picture']
+      }
+    ]
+  })
+
+  // 获取 dataValues
+  let messageList = res.rows.map(row => {
+    const messageRow = row.dataValues
+    messageRow.blog = messageRow.blog.dataValues
+    messageRow.user = formatUser(messageRow.user.dataValues)
+    return messageRow
+  })
+
+  return messageList
+}
+
+// 获取回复该用户的回复信息
+async function getMessageReply(userId) {
+  const resByReply = await Message.findAndCountAll({
+    where: {
+      toUserId: userId,
+      isRead: false
+    },
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'userName', 'nickName', 'picture']
+      }, {
+        model: Blog,
+      }
+    ]
+  })
+
+  // 获取 dataValues
+  let messageListByReply = resByReply.rows.map(row => {
+    const messageRow = row.dataValues
+    messageRow.toUserId ? row.dataValues = formatUser(row.dataValues) : ''
+    messageRow.blog = messageRow.blog.dataValues
+    messageRow.user = formatUser(messageRow.user.dataValues)
+    return messageRow
+  })
+  return messageListByReply
+}
+
+
 /**
  * 添加点赞、举报、评论回复 消息数据
  */
@@ -34,58 +96,11 @@ async function addMessage({ userId, blogId, toUserId, content, type }) {
  */
 async function getMessageByUser(userId) {
   // 获取用户写的所有博客中的点赞信息、举报信息、评论回复信息
-  const res = await Message.findAndCountAll({
-    order: [
-      ['id', 'desc']
-    ],
-    where: {
-      isRead: false
-    },
-    include: [
-      {
-        model: Blog,
-        where: {
-          userId
-        }
-      }, {
-        model: User,
-        attributes: ['id', 'userName', 'nickName', 'picture']
-      }
-    ]
-  })
+  let messageList = await getMessage(userId)
 
-  // 获取 dataValues
-  let messageList = res.rows.map(row => {
-    const messageRow = row.dataValues
-    messageRow.blog = messageRow.blog.dataValues
-    messageRow.user = formatUser(messageRow.user.dataValues)
-    return messageRow
-  })
 
   // 获取回复该用户的回复信息
-  const resByReply = await Message.findAndCountAll({
-    where: {
-      toUserId: userId,
-      isRead: false
-    },
-    include: [
-      {
-        model: User,
-        attributes: ['id', 'userName', 'nickName', 'picture']
-      }, {
-        model: Blog,
-      }
-    ]
-  })
-
-  // 获取 dataValues
-  let messageListByReply = resByReply.rows.map(row => {
-    const messageRow = row.dataValues
-    messageRow.toUserId ? row.dataValues = formatUser(row.dataValues) : ''
-    messageRow.blog = messageRow.blog.dataValues
-    messageRow.user = formatUser(messageRow.user.dataValues)
-    return messageRow
-  })
+  let messageListByReply = await getMessageReply(userId)
 
   // 把这两个消息列表组合，去重
   messageListByReply.map(rowByReply => {

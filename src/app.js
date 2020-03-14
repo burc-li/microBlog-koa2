@@ -18,6 +18,7 @@ const utils = require('./routes/utils')
 const blog = require('./routes/blog')
 const userRelation = require('./routes/user_relation')
 const message = require('./routes/message')
+const statis = require('./routes/statis')
 
 
 // error handler 在页面上显示错误信息
@@ -69,6 +70,7 @@ app.use(utils.routes(), utils.allowedMethods())
 app.use(blog.routes(), blog.allowedMethods())
 app.use(userRelation.routes(), userRelation.allowedMethods())
 app.use(message.routes(), message.allowedMethods())
+app.use(statis.routes(), statis.allowedMethods())
 
 // error-handling  打印错误信息
 app.on('error', (err, ctx) => {

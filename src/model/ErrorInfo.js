@@ -98,4 +98,14 @@ module.exports = {
     error: 11007,
     message: '设置已读消息通知失败，请刷新'
   },
+  // 获取性别统计失败
+  sexStatisFailInfo: {
+    error: 11008,
+    message: '获取性别统计失败，请刷新'
+  },
+  // 获取博客数量统计失败
+  blogStatisFailInfo: {
+    error: 11009,
+    message: '获取博客数量统计失败，请刷新'
+  },
 }
