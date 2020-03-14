@@ -45,6 +45,9 @@ Blog.belongsTo(UserRelation, {
 Blog.hasMany(Message, {
   foreignKey: 'blogId'
 })
+Message.belongsTo(Blog, {
+  foreignKey: 'blogId'
+})
 
 Message.belongsTo(User, {
   foreignKey: 'userId'

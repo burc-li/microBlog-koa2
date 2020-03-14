@@ -138,27 +138,36 @@ async function getBlogDetailByBlogId(blogId) {
       {
         model: Message,
         include: [
-          { model: User }
+          {
+            model: User,
+            attributes: ['id', 'userName', 'nickName', 'picture']
+          }
         ]
       },
     ]
   })
   let detail = res.dataValues
-  console.log("detail", detail)
   detail.messages = detail.messages.map(item => {
     item.dataValues.toUserId ? item.dataValues = formatUser(item.dataValues) : ''
     item.dataValues.user = formatUser(item.dataValues.user)
     return item.dataValues
   })
-  detail.like = detail.messages.filter(item => item.type === 1)
-  detail.complain = detail.messages.filter(item => item.type === 2)
-  detail.comment = detail.messages.filter(item => item.type === 3)
 
+  detail.likeCount = detail.messages.filter(item =>
+    item.type === 1
+  ).length
+  detail.complainCount = detail.messages.filter(item =>
+    item.type === 2
+  ).length
+  detail.comment = detail.messages.filter(item =>
+    item.type === 3
+  )
+  detail.comment.sort((a, b) =>
+    a.id > b.id
+  )
   delete detail.messages
 
-  return {
-    detail
-  }
+  return { detail }
 }
 
 

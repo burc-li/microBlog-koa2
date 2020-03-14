@@ -51,5 +51,4 @@ router.get('/detail', loginCheck, async (ctx, next) => {
   ctx.body = await getBlogDetail(blogId)
 })
 
-
 module.exports = router

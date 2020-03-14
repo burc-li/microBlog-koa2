@@ -90,7 +90,6 @@ async function getFollowersBlogList(pageIndex = 0, userId) {
 async function getBlogDetail(blogId) {
   let detail = await getBlogDetailByBlogId(blogId)
 
-  // 拼接返回数据
   return new SuccessModel(detail)
 }
 

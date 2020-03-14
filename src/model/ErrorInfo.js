@@ -88,4 +88,9 @@ module.exports = {
     error: 11005,
     message: '评论失败，请重试'
   },
+  // 获取消息通知失败
+  messageNoticeFailInfo: {
+    error: 11006,
+    message: '获取消息通知失败，请刷新'
+  },
 }

@@ -4,7 +4,7 @@
 
 const router = require('koa-router')()
 const { loginCheck } = require('../middlewares/loginCheck')
-const { likeBlog, complainBlog, commentBlog } = require('../controller/message')
+const { likeBlog, complainBlog, commentBlog, getMessageNotice } = require('../controller/message')
 
 router.prefix('/api/message')
 
@@ -25,6 +25,14 @@ router.post('/comment', loginCheck, async (ctx, next) => {
   const { userId, blogId, toUserId, content } = ctx.request.body
   ctx.body = await commentBlog({ userId, blogId, toUserId, content, type: 3 })
 })
+
+// 通过用户ID获取消息通知（点赞信息、举报信息、评论回复信息）
+router.get('/notice', loginCheck, async (ctx, next) => {
+  const { userId } = ctx.query
+
+  ctx.body = await getMessageNotice(userId)
+})
+
 
 
 module.exports = router
