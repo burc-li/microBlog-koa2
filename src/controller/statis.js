@@ -1,7 +1,7 @@
 /**
  * @description 性别统计、博客数量统计 controller
  */
-const { getSexCount } = require('../services/statis')
+const { getSexCount, getBlogCountOfDay } = require('../services/statis')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { sexStatisFailInfo, blogStatisFailInfo } = require('../model/ErrorInfo')
 
@@ -23,6 +23,19 @@ async function getStatisSex() {
   }
 }
 
+/**
+ * 统计每天的博客数量
+ */
+async function getStatisBlog() {
+  try {
+    const res = await getBlogCountOfDay()
+    return new SuccessModel(res)
+  } catch (err) {
+    return new ErrorModel(blogStatisFailInfo)
+  }
+}
+
 module.exports = {
   getStatisSex,
+  getStatisBlog
 }
