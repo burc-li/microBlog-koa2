@@ -3,7 +3,7 @@
  */
 
 const xss = require('xss')
-const { createBlog, delBlog, getBlogListByUser, getFollowersBlogListByUser } = require('../services/blog')
+const { createBlog, delBlog, getBlogListByUser, getFollowersBlogListByUser, getBlogDetailByBlogId } = require('../services/blog')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { createBlogFailInfo, deleteBlogFailInfo } = require('../model/ErrorInfo')
 const { PAGE_SIZE } = require('../config/constant')
@@ -83,9 +83,21 @@ async function getFollowersBlogList(pageIndex = 0, userId) {
   })
 }
 
+/**
+ * 通过博客id获取博客详细信息（内容、点赞信息、举报信息、评论回复信息）
+ * @param {number} blogId 
+ */
+async function getBlogDetail(blogId) {
+  let detail = await getBlogDetailByBlogId(blogId)
+
+  // 拼接返回数据
+  return new SuccessModel(detail)
+}
+
 module.exports = {
   create,
   del,
   getBlogList,
-  getFollowersBlogList
+  getFollowersBlogList,
+  getBlogDetail
 }

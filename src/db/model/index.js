@@ -46,6 +46,10 @@ Blog.hasMany(Message, {
   foreignKey: 'blogId'
 })
 
+Message.belongsTo(User, {
+  foreignKey: 'userId'
+})
+
 module.exports = {
   User,
   Blog,

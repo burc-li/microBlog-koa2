@@ -2,7 +2,7 @@
  * @description 微博 service
  */
 
-const { Blog, User, UserRelation } = require('../db/model/index')
+const { Blog, User, UserRelation, Message } = require('../db/model/index')
 const { formatUser } = require('./_format')
 
 /**
@@ -124,11 +124,49 @@ async function getFollowersBlogListByUser(pageIndex, userId, pageSize) {
   }
 }
 
+/**
+ * 通过博客id获取博客详细信息（内容、点赞信息、举报信息、评论回复信息）
+ * @param {number} blogId 
+ */
+async function getBlogDetailByBlogId(blogId) {
+  // 执行查询
+  const res = await Blog.findOne({
+    where: {
+      id: blogId
+    },
+    include: [
+      {
+        model: Message,
+        include: [
+          { model: User }
+        ]
+      },
+    ]
+  })
+  let detail = res.dataValues
+  console.log("detail", detail)
+  detail.messages = detail.messages.map(item => {
+    item.dataValues.toUserId ? item.dataValues = formatUser(item.dataValues) : ''
+    item.dataValues.user = formatUser(item.dataValues.user)
+    return item.dataValues
+  })
+  detail.like = detail.messages.filter(item => item.type === 1)
+  detail.complain = detail.messages.filter(item => item.type === 2)
+  detail.comment = detail.messages.filter(item => item.type === 3)
+
+  delete detail.messages
+
+  return {
+    detail
+  }
+}
+
 
 module.exports = {
   createBlog,
   delBlog,
   getBlogListByUser,
-  getFollowersBlogListByUser
+  getFollowersBlogListByUser,
+  getBlogDetailByBlogId
 }
 

@@ -45,8 +45,8 @@ async function complainBlog({ userId, blogId, type }) {
  */
 async function commentBlog({ userId, blogId, toUserId, content, type }) {
   try {
-    await addMessage({ userId, blogId, toUserId, content, type })
-    return new SuccessModel()
+    const res = await addMessage({ userId, blogId, toUserId, content, type })
+    return new SuccessModel(res)
   } catch (err) {
     return new ErrorModel(commentBlogFailInfo)
   }
