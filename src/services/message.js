@@ -38,6 +38,9 @@ async function getMessageByUser(userId) {
     order: [
       ['id', 'desc']
     ],
+    where: {
+      isRead: false
+    },
     include: [
       {
         model: Blog,
@@ -62,7 +65,8 @@ async function getMessageByUser(userId) {
   // 获取回复该用户的回复信息
   const resByReply = await Message.findAndCountAll({
     where: {
-      toUserId: userId
+      toUserId: userId,
+      isRead: false
     },
     include: [
       {
@@ -98,7 +102,26 @@ async function getMessageByUser(userId) {
   }
 }
 
+
+/**
+ * 修改 messages 数据表的 isRead 属性为 true
+ */
+async function updateMessageByUser(userId) {
+  const { messageList } = await getMessageByUser(userId)
+  const updateIdArr = messageList.map(item => item.id)
+
+  const res = await Message.update({
+    isRead: true
+  }, {
+    where: {
+      id: updateIdArr
+    }
+  })
+  return res[0] > 0
+}
+
 module.exports = {
   addMessage,
-  getMessageByUser
+  getMessageByUser,
+  updateMessageByUser
 }

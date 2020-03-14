@@ -4,7 +4,12 @@
 
 const router = require('koa-router')()
 const { loginCheck } = require('../middlewares/loginCheck')
-const { likeBlog, complainBlog, commentBlog, getMessageNotice } = require('../controller/message')
+const { likeBlog,
+  complainBlog,
+  commentBlog,
+  getMessageNotice,
+  readMessageNotice
+} = require('../controller/message')
 
 router.prefix('/api/message')
 
@@ -31,6 +36,13 @@ router.get('/notice', loginCheck, async (ctx, next) => {
   const { userId } = ctx.query
 
   ctx.body = await getMessageNotice(userId)
+})
+
+// 已读
+router.post('/read', loginCheck, async (ctx, next) => {
+  const { userId } = ctx.request.body
+
+  ctx.body = await readMessageNotice(userId)
 })
 
 

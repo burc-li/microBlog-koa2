@@ -93,4 +93,9 @@ module.exports = {
     error: 11006,
     message: '获取消息通知失败，请刷新'
   },
+  // 设置已读消息通知失败
+  messageNoticeFailInfo: {
+    error: 11007,
+    message: '设置已读消息通知失败，请刷新'
+  },
 }

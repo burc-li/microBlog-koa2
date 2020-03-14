@@ -2,12 +2,13 @@
  * @description 点赞、举报、评论 controller
  */
 
-const { addMessage, getMessageByUser } = require('../services/message')
+const { addMessage, getMessageByUser, updateMessageByUser } = require('../services/message')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { likeBlogFailInfo,
   complainBlogFailInfo,
   commentBlogFailInfo,
-  messageNoticeFailInfo
+  messageNoticeFailInfo,
+  readMessageNoticeFailInfo
 } = require('../model/ErrorInfo')
 
 /**
@@ -58,7 +59,7 @@ async function commentBlog({ userId, blogId, toUserId, content, type }) {
 
 /**
  * 通过用户ID获取消息通知（点赞信息、举报信息、评论回复信息）
- * @param {number} userId  做出评论动作的用户ID
+ * @param {number} userId  用户ID
  */
 async function getMessageNotice(userId) {
   try {
@@ -69,4 +70,23 @@ async function getMessageNotice(userId) {
   }
 }
 
-module.exports = { likeBlog, complainBlog, commentBlog, getMessageNotice }
+/**
+ * 设置消息已读
+ * @param {number} userId  用户ID
+ */
+async function readMessageNotice(userId) {
+  try {
+    const res = await updateMessageByUser(userId)
+    return new SuccessModel()
+  } catch (err) {
+    return new ErrorModel(readMessageNoticeFailInfo)
+  }
+}
+
+module.exports = {
+  likeBlog,
+  complainBlog,
+  commentBlog,
+  getMessageNotice,
+  readMessageNotice
+}
