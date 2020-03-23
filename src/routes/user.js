@@ -16,8 +16,9 @@ router.post('/isExist', async (ctx, next) => {
 
 // 注册API
 router.post('/register', async (ctx, next) => {
-  const { userName, password, gender } = ctx.request.body
+  const { email, userName, password, gender } = ctx.request.body
   ctx.body = await register({
+    email,
     userName,
     password,
     gender
@@ -36,8 +37,8 @@ router.post('/login', async (ctx, next) => {
 
 // 修改个人信息
 router.patch('/changeInfo', loginCheck, async (ctx, next) => {
-  const { nickName, city, picture } = ctx.request.body
-  ctx.body = await changeInfo(ctx, { nickName, city, picture })
+  const { briefIntroduce, city, picture } = ctx.request.body
+  ctx.body = await changeInfo(ctx, { briefIntroduce, city, picture })
 })
 
 // 修改密码

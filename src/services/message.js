@@ -22,7 +22,7 @@ async function getMessage(userId) {
         }
       }, {
         model: User,
-        attributes: ['id', 'userName', 'nickName', 'picture']
+        attributes: ['id', 'userName', 'briefIntroduce', 'picture']
       }
     ]
   })
@@ -48,7 +48,7 @@ async function getMessageReply(userId) {
     include: [
       {
         model: User,
-        attributes: ['id', 'userName', 'nickName', 'picture']
+        attributes: ['id', 'userName', 'briefIntroduce', 'picture']
       }, {
         model: Blog,
       }

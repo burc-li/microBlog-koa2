@@ -57,7 +57,7 @@ async function getBlogListByUser(
     include: [
       {
         model: User,
-        attributes: ['userName', 'nickName', 'picture'],
+        attributes: ['userName', 'briefIntroduce', 'picture'],
         where: userWhereOpts
       }
     ]
@@ -96,7 +96,7 @@ async function getFollowersBlogListByUser(pageIndex, userId, pageSize) {
     include: [
       {
         model: User,
-        attributes: ['userName', 'nickName', 'picture']
+        attributes: ['userName', 'briefIntroduce', 'picture']
       }, {
         model: UserRelation,
         attributes: ['userId', 'followerId'],
@@ -140,7 +140,7 @@ async function getBlogDetailByBlogId(blogId) {
         include: [
           {
             model: User,
-            attributes: ['id', 'userName', 'nickName', 'picture']
+            attributes: ['id', 'userName', 'briefIntroduce', 'picture']
           }
         ]
       },

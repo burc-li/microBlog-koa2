@@ -5,6 +5,7 @@
 const { User } = require("../db/model/index");
 const { formatUser } = require("./_format");
 const { addFollower } = require('./user_relation')
+const { BRIEF_INTRODUCE } = require('../config/constant')
 
 /**
  * 获取用户信息
@@ -22,7 +23,7 @@ async function getUserInfo(userName, password) {
 
   // 查询
   const result = await User.findOne({
-    attributes: ["id", "userName", "nickName", "picture", "city"],
+    attributes: ["id", "userName", "briefIntroduce", "picture", "city"],
     where: whereOpt
   });
 
@@ -42,13 +43,14 @@ async function getUserInfo(userName, password) {
  * @param {string} userName 用户名
  * @param {string} password 密码
  * @param {number} gender 性别
- * @param {string} nickName 昵称
+ * @param {string} briefIntroduce 简介
  */
-async function createUser({ userName, password, gender = 3, nickName }) {
+async function createUser({ email, userName, password, gender = 3, briefIntroduce }) {
   const result = await User.create({
+    email,
     userName,
     password,
-    nickName: nickName ? nickName : userName,
+    briefIntroduce: briefIntroduce ? briefIntroduce : BRIEF_INTRODUCE,
     gender
   });
   const data = result.dataValues;
@@ -61,11 +63,11 @@ async function createUser({ userName, password, gender = 3, nickName }) {
 
 /**
  * 更新用户信息
- * @param {Object} param0 要修改的内容 { newPassword, newNickName, newPicture, newCity }
+ * @param {Object} param0 要修改的内容 { newPassword, newBriefIntroduce, newPicture, newCity }
  * @param {Object} param1 查询条件 { userName, password }
  */
 async function updateUser(
-  { newPassword, newNickName, newPicture, newCity },
+  { newPassword, newBriefIntroduce, newPicture, newCity },
   { userName, password }
 ) {
   // 拼接修改内容
@@ -73,8 +75,8 @@ async function updateUser(
   if (newPassword) {
     updateData.password = newPassword;
   }
-  if (newNickName) {
-    updateData.nickName = newNickName;
+  if (newBriefIntroduce) {
+    updateData.briefIntroduce = newBriefIntroduce;
   }
   if (newPicture) {
     updateData.picture = newPicture;

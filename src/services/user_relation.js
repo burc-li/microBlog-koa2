@@ -40,7 +40,7 @@ async function deleteFollower(userId, followerId) {
  */
 async function getUsersByFollower(followerId) {
   const res = await User.findAndCountAll({
-    attributes: ['id', 'userName', 'nickName', 'picture'],
+    attributes: ['id', 'userName', 'briefIntroduce', 'picture'],
     order: [
       ["id", "desc"]
     ],
@@ -83,7 +83,7 @@ async function getFollowersByUser(userId) {
     include: [
       {
         model: User,
-        attributes: ['id', 'userName', 'nickName', 'picture']
+        attributes: ['id', 'userName', 'briefIntroduce', 'picture']
       }
     ],
     where: {

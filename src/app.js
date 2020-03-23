@@ -1,5 +1,6 @@
 const Koa = require('koa')
 const app = new Koa()
+
 const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
@@ -41,6 +42,8 @@ app.use(views(__dirname + '/views', {
   extension: 'ejs'
 }))
 
+
+
 // logger 无用  使用app.use(logger())即可打印
 // app.use(async (ctx, next) => {
 //   const start = new Date()
@@ -63,6 +66,7 @@ app.use(session({
     all: `${REDIS_CONFIG.host}:${REDIS_CONFIG.port}`
   })
 }))
+
 
 // routes
 app.use(user.routes(), user.allowedMethods())

@@ -3,7 +3,7 @@
  */
 
 const seq = require('../seq')
-const { STRING, DECIMAL, } = require('../types')
+const { STRING, DECIMAL, DATE } = require('../types')
 
 // 数据表的名字是users
 const User = seq.define('user', {
@@ -19,10 +19,17 @@ const User = seq.define('user', {
     allowNull: false,
     comment: '密码'
   },
-  nickName: {
+  briefIntroduce: {
     type: STRING,
-    allowNull: false,
-    comment: '昵称'
+    comment: '简介'
+  },
+  email: {
+    type: STRING,
+    comment: '邮箱'
+  },
+  birthday: {
+    type: DATE,
+    comment: '生日'
   },
   gender: {
     type: DECIMAL,

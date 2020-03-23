@@ -11,6 +11,7 @@ const {
   changeInfoFailInfo,
   changePasswordFailInfo
 } = require("../model/ErrorInfo");
+const { BRIEF_INTRODUCE } = require("../config/constant")
 const doCrypto = require("../utils/crypto");
 
 /**
@@ -34,7 +35,7 @@ async function isExist(userName) {
  * @param {string} password 密码
  * @param {number} gender 性别（1 男，2 女，3 保密）
  */
-async function register({ userName, password, gender }) {
+async function register({ email, userName, password, gender }) {
   const userInfo = await getUserInfo(userName);
   if (userInfo) {
     // 用户名已存在
@@ -43,6 +44,7 @@ async function register({ userName, password, gender }) {
 
   try {
     await createUser({
+      email,
       userName,
       password: doCrypto(password),
       gender
@@ -73,19 +75,19 @@ async function login({ ctx, userName, password }) {
 /**
  * 修改个人信息
  * @param {Object} ctx ctx
- * @param {string} nickName 昵称
+ * @param {string} briefIntroduce 简介
  * @param {string} city 城市
  * @param {string} picture 头像
  */
-async function changeInfo(ctx, { nickName, city, picture }) {
+async function changeInfo(ctx, { briefIntroduce, city, picture }) {
   const { userName } = ctx.session.userInfo;
-  if (!nickName) {
-    nickName = userName;
+  if (!briefIntroduce) {
+    briefIntroduce = BRIEF_INTRODUCE;
   }
 
   const result = await updateUser(
     {
-      newNickName: nickName,
+      newBriefIntroduce: briefIntroduce,
       newCity: city,
       newPicture: picture
     },
@@ -94,7 +96,7 @@ async function changeInfo(ctx, { nickName, city, picture }) {
   if (result) {
     // 执行成功
     Object.assign(ctx.session.userInfo, {
-      nickName,
+      briefIntroduce,
       city,
       picture
     });
