@@ -18,19 +18,19 @@ const doCrypto = require('../utils/crypto')
  * @param {number} size 文件体积大小 
  * @param {string} filePath 文件路径 
  */
-async function renameFile(ctx,{name, type, size, filePath}) {
+async function renameFile(ctx, { name, type, size, filePath }) {
 
-  const userName = ctx.session.userInfo.userName 
+  const userName = ctx.session.userInfo.userName
 
   // 防止文件名称相同
-  const fileName = doCrypto(userName+Date.now()) + '_' + name
+  const fileName = doCrypto(userName + Date.now()) + '_' + name
 
-  const fileNewPath = path.join(__dirname,'..','..','/uploadFiles',fileName)
+  const fileNewPath = path.join(__dirname, '..', '..', '/uploadFiles', fileName)
 
-  fs.rename(filePath,fileNewPath, err => {})
+  fs.rename(filePath, fileNewPath, err => { })
 
   return new SuccessModel({
-    url: '/'+ fileName
+    url: '/' + fileName
   })
 }
 

@@ -19,6 +19,7 @@ router.post('/follow', loginCheck, async (ctx, next) => {
 router.delete('/unFollow', loginCheck, async (ctx, next) => {
   const { id: myUserId } = ctx.session.userInfo
   const { userId: curUserId } = ctx.request.body
+  console.log("userId", curUserId)
   ctx.body = await unFollow(myUserId, curUserId)
 })
 

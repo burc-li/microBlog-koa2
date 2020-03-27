@@ -103,6 +103,8 @@ async function getFollowersByUser(userId) {
     return userVal
   })
 
+  console.log("userList", userList)
+
   return {
     count: result.count,
     userList

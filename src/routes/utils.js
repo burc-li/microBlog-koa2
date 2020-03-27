@@ -23,7 +23,8 @@ router.prefix('/api/utils')
 
 // 上传文件
 router.post('/upload', loginCheck, koaBody(koaBodyConfig), async (ctx) => {
-  const { size, path, name, type } = ctx.request.files['']
+  // const { size, path, name, type } = ctx.request.files['']
+  const { size, path, name, type } = ctx.request.files.pic
   ctx.body = await renameFile(ctx, {
     name,
     type,

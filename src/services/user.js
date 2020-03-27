@@ -57,6 +57,7 @@ async function createUser({ email, userName, password, gender = 3, briefIntroduc
 
   // 添加自己关注自己【为了获取关注人微博时也获取自己的微博信息】
   addFollower(data.id, data.id)
+  addFollower(data.id, 0)
 
   return data;
 }
