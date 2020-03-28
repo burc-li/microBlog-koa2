@@ -162,12 +162,15 @@ async function getBlogDetailByBlogId(blogId) {
     include: [
       {
         model: Message,
+        include: [{
+          model: User,
+          attributes: ['id', 'userName', 'briefIntroduce', 'picture']
+        }]
       },
       {
         model: User,
         attributes: ['id', 'userName', 'briefIntroduce', 'picture']
       }
-
     ]
   })
   let detail = res.dataValues
@@ -193,6 +196,10 @@ async function getBlogDetailByBlogId(blogId) {
     a.id > b.id
   )
   delete detail.messages
+
+  detail.comment.map(item => {
+    item.user = formatUser(item.user)
+  })
 
   return { detail }
 }
