@@ -90,27 +90,29 @@ async function addMessage({ userId, blogId, toUserId, content, type }) {
 
   // 如果类型为点赞  若已经点赞则取消，
 
-  const finRes = await Message.findOne({
-    where: {
-      userId: userId,
-      blogId: blogId,
-      type: 1
-    }
-  })
-  // console.log("finRes", finRes)
-  if (finRes) {
-    const delRes = await Message.destroy({
+  if (type === 1) {
+    const finRes = await Message.findOne({
       where: {
         userId: userId,
         blogId: blogId,
         type: 1
       }
     })
-    return delRes
-  } else {
-    const res = await Message.create(addOptions)
-    return res.dataValues
+    if (finRes) {
+      const delRes = await Message.destroy({
+        where: {
+          userId: userId,
+          blogId: blogId,
+          type: 1
+        }
+      })
+      return delRes
+    }
   }
+
+  const res = await Message.create(addOptions)
+  return res.dataValues
+
 }
 
 /**
