@@ -54,6 +54,7 @@ async function getBlogListByUser(
     order: [
       ['id', 'desc']
     ],
+    distinct: true,
     include: [
       {
         model: User,
@@ -85,7 +86,8 @@ async function getBlogListByUser(
     return blogItem
   })
 
-
+  console.log(" result.count", result.count)
+  console.log(" blogList", blogList)
   return {
     count: result.count,
     blogList
@@ -106,6 +108,7 @@ async function getFollowersBlogListByUser(pageIndex, userId, pageSize) {
     order: [
       ['id', 'desc']
     ],
+    distinct: true,
     include: [
       {
         model: User,
