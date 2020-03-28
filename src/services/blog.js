@@ -59,6 +59,10 @@ async function getBlogListByUser(
         model: User,
         attributes: ['id', 'userName', 'briefIntroduce', 'picture'],
         where: userWhereOpts
+      },
+      {
+        model: Message,
+        attributes: ['id', 'type'],
       }
     ]
   })
@@ -70,8 +74,17 @@ async function getBlogListByUser(
 
   blogList = blogList.map(blogItem => {
     blogItem.user = formatUser(blogItem.user.dataValues)
+    blogItem.likeCount = blogItem.messages.filter(item =>
+      item.type === 1
+    ).length
+    blogItem.commentCount = blogItem.messages.filter(item =>
+      item.type === 3
+    ).length
+
+    delete blogItem.messages
     return blogItem
   })
+
 
   return {
     count: result.count,
@@ -103,6 +116,10 @@ async function getFollowersBlogListByUser(pageIndex, userId, pageSize) {
         where: {
           userId
         }
+      },
+      {
+        model: Message,
+        attributes: ['id', 'type'],
       }
     ]
   })
@@ -115,6 +132,14 @@ async function getFollowersBlogListByUser(pageIndex, userId, pageSize) {
   blogList = blogList.map(blogItem => {
     blogItem.user = formatUser(blogItem.user.dataValues)
     blogItem.userRelation = blogItem.userRelation.dataValues
+    blogItem.likeCount = blogItem.messages.filter(item =>
+      item.type === 1
+    ).length
+    blogItem.commentCount = blogItem.messages.filter(item =>
+      item.type === 3
+    ).length
+
+    delete blogItem.messages
     return blogItem
   })
 
