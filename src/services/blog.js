@@ -162,9 +162,7 @@ async function getBlogDetailByBlogId(blogId) {
     include: [
       {
         model: Message,
-
       },
-
       {
         model: User,
         attributes: ['id', 'userName', 'briefIntroduce', 'picture']
@@ -173,6 +171,9 @@ async function getBlogDetailByBlogId(blogId) {
     ]
   })
   let detail = res.dataValues
+
+  detail.user = formatUser(detail.user)
+
   detail.messages = detail.messages.map(item => {
     item.dataValues.toUserId ? item.dataValues = formatUser(item.dataValues) : ''
     item.dataValues.user = formatUser(item.dataValues.user)
