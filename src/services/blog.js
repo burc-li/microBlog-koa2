@@ -162,13 +162,14 @@ async function getBlogDetailByBlogId(blogId) {
     include: [
       {
         model: Message,
-        include: [
-          {
-            model: User,
-            attributes: ['id', 'userName', 'briefIntroduce', 'picture']
-          }
-        ]
+
       },
+
+      {
+        model: User,
+        attributes: ['id', 'userName', 'briefIntroduce', 'picture']
+      }
+
     ]
   })
   let detail = res.dataValues
