@@ -88,9 +88,29 @@ async function addMessage({ userId, blogId, toUserId, content, type }) {
   if (content)
     Object.assign(addOptions, { content })
 
+  // 如果类型为点赞  若已经点赞则取消，
 
-  const res = await Message.create(addOptions)
-  return res.dataValues
+  const finRes = await Message.findOne({
+    where: {
+      userId: userId,
+      blogId: blogId,
+      type: 1
+    }
+  })
+  // console.log("finRes", finRes)
+  if (finRes) {
+    const delRes = await Message.destroy({
+      where: {
+        userId: userId,
+        blogId: blogId,
+        type: 1
+      }
+    })
+    return delRes
+  } else {
+    const res = await Message.create(addOptions)
+    return res.dataValues
+  }
 }
 
 /**
