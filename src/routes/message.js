@@ -8,7 +8,8 @@ const { likeBlog,
   complainBlog,
   commentBlog,
   getMessageNotice,
-  readMessageNotice
+  readMessageNotice,
+  getMessageOldnotice
 } = require('../controller/message')
 
 router.prefix('/api/message')
@@ -36,6 +37,13 @@ router.get('/notice', loginCheck, async (ctx, next) => {
   const { userId } = ctx.query
 
   ctx.body = await getMessageNotice(userId)
+})
+
+// 通过用户ID获取旧消息通知（点赞信息、举报信息、评论回复信息）
+router.get('/oldNotice', loginCheck, async (ctx, next) => {
+  const { userId } = ctx.query
+
+  ctx.body = await getMessageOldnotice(userId)
 })
 
 // 已读

@@ -2,7 +2,7 @@
  * @description 点赞、举报、评论 controller
  */
 
-const { addMessage, getMessageByUser, updateMessageByUser } = require('../services/message')
+const { addMessage, getMessageByUser, getOldMessageByUser, updateMessageByUser } = require('../services/message')
 const { SuccessModel, ErrorModel } = require('../model/ResModel')
 const { likeBlogFailInfo,
   complainBlogFailInfo,
@@ -69,6 +69,18 @@ async function getMessageNotice(userId) {
     return new ErrorModel(messageNoticeFailInfo)
   }
 }
+/**
+ * 通过用户ID获取已读消息通知（点赞信息、举报信息、评论回复信息）
+ * @param {number} userId  用户ID
+ */
+async function getMessageOldnotice(userId) {
+  try {
+    const res = await getOldMessageByUser(userId)
+    return new SuccessModel(res)
+  } catch (err) {
+    return new ErrorModel(messageNoticeFailInfo)
+  }
+}
 
 /**
  * 设置消息已读
@@ -88,5 +100,6 @@ module.exports = {
   complainBlog,
   commentBlog,
   getMessageNotice,
-  readMessageNotice
+  readMessageNotice,
+  getMessageOldnotice
 }

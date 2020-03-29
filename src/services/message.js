@@ -6,13 +6,13 @@ const { Message, User, Blog } = require('../db/model')
 const { formatUser } = require('../services/_format')
 
 // 获取用户写的所有博客中的点赞信息、举报信息、评论回复信息
-async function getMessage(userId) {
+async function getMessage(userId, readType) {
   const res = await Message.findAndCountAll({
     order: [
       ['id', 'desc']
     ],
     where: {
-      isRead: false
+      isRead: readType
     },
     include: [
       {
@@ -39,11 +39,11 @@ async function getMessage(userId) {
 }
 
 // 获取回复该用户的回复信息
-async function getMessageReply(userId) {
+async function getMessageReply(userId, readType) {
   const resByReply = await Message.findAndCountAll({
     where: {
       toUserId: userId,
-      isRead: false
+      isRead: readType
     },
     include: [
       {
@@ -120,11 +120,36 @@ async function addMessage({ userId, blogId, toUserId, content, type }) {
  */
 async function getMessageByUser(userId) {
   // 获取用户写的所有博客中的点赞信息、举报信息、评论回复信息
-  let messageList = await getMessage(userId)
+  let messageList = await getMessage(userId, false)
 
 
   // 获取回复该用户的回复信息
-  let messageListByReply = await getMessageReply(userId)
+  let messageListByReply = await getMessageReply(userId, false)
+
+  // 把这两个消息列表组合，去重
+  messageListByReply.map(rowByReply => {
+    const isExit = messageList.some(row => rowByReply.id === row.id)
+    if (!isExit)
+      messageList.push(rowByReply)
+  })
+  // 重排序
+  messageList.sort((a, b) => a.id < b.id)
+
+  return {
+    messageList: messageList,
+    count: messageList.length
+  }
+}
+/**
+ * 通过用户ID获取已读消息通知（点赞信息、举报信息、评论回复信息）【已读】
+ */
+async function getOldMessageByUser(userId) {
+  // 获取用户写的所有博客中的已读点赞信息、举报信息、评论回复信息【已读】
+  let messageList = await getMessage(userId, true)
+
+
+  // 获取回复该用户的回复信息【已读】
+  let messageListByReply = await getMessageReply(userId, true)
 
   // 把这两个消息列表组合，去重
   messageListByReply.map(rowByReply => {
@@ -162,5 +187,6 @@ async function updateMessageByUser(userId) {
 module.exports = {
   addMessage,
   getMessageByUser,
+  getOldMessageByUser,
   updateMessageByUser
 }
