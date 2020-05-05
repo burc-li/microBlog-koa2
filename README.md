@@ -1,5 +1,5 @@
 # microBlog-react
-本仓库是柏成毕业设计-校园微博的前端源码。
+本仓库是柏成毕业设计-校园微博的后端源码。
 ```
 #首先下载microBlog-react
 #按照步骤打包build
